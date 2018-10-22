@@ -1,133 +1,88 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <title>Congreso 2019</title>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
- 
-  <link rel="stylesheet" type="text/css" href="estilo.css">
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-  <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
-  <style>
-	.navbar {
-		padding-top: 15px;
-		padding-bottom: 15px;
-		border: 0;
-		border-radius: 0;
-		margin-bottom: 0;
-		font-size: 12px;
-		letter-spacing: 5px;
-		background-color: #213b5b;
 
-	}
-	.navbar-nav  li a:hover {
-		color: #1abc9c !important;
-	}
+	<title>Congreso 2019</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
 
-	.navbar-nav li a{
-		color: #ffffff !important;
-	}
+  
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 
-	.navbar-header a{
-		color: #ffffff !important;
-	}
-	.carousel-control.right, .carousel-control.left {
-    background-image: none;
-    color: #2e4166;
-	}
-
-	.carousel-indicators li {
-	    border-color: #2e4166;
-	}
-
-	.carousel-indicators li.active {
-	    background-color: #2e4166;
-	}
-
-	.item h4 {
-	    font-size: 19px;
-	    color: #283544;
-	    line-height: 1.375em;
-	    font-weight: 400;
-	    font-style: italic;
-	    margin: 70px 0;
-	}
-
-	.item span {
-	    font-style: normal;
-
-	}
-	div h2{
-		color: #283544;
-	}
-  </style>
+	<link rel="stylesheet" href="estilo.css">
 </head>
 <body id="myPage">
-	<nav class="navbar navbar-default">
-	  <div class="container">
-	    <div class="navbar-header">
-	    		     <a class="navbar-brand" href="#myPage"> <img src="UcaLogo.png" class="img-responsive" 
-	      style="width:200px;" alt="congreso"></a>
-	      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
-	        <span class="icon-bar"></span>
-	        <span class="icon-bar"></span>
-	        <span class="icon-bar"></span>                        
-	      </button>
 
-	    </div>
-	    <div class="collapse navbar-collapse" id="myNavbar">
-	      <ul class="nav navbar-nav navbar-right">
-	        <li><a href="#">Inicio</a></li>
-	        <li><a href="#">Insertar Pregunta Personal</a></li>
-	        <li><a href="#">Insertar Pregunta Profesorado</a></li>
-	        <li><a href="#">Insertar Profesor</a></li>
-	        <li><a href="#">Eliminar Preguntas Personales</a></li>
-	        <li><a href="#">Eliminar Preguntas Personales</a></li>
-	        <li><a href="#">Eliminar Profesores</a></li>
-	        <li><a href="#">Ver Respuestas</a></li>
-	      </ul>
-	    </div>
-	  </div>
-	</nav>
-	
+	<!--Navbar-->
+	<nav class="navbar navbar-dark bg-dark">
+      <a class="navbar-brand" href="#">Administración</a>
+      <button class="navbar-toggler collapsed" type="button" data-toggle="collapse" data-target="#navbarsExample01" aria-controls="navbarsExample01" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
 
+      <div class="navbar-collapse collapse" id="navbarsExample01" >
+        <ul class="navbar-nav mr-auto">
+          <li class="nav-item active">
+            <a class="nav-link" href="#">Inicio <span class="sr-only">(current)</span></a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Insertar Pregunta (personal)</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Insertar Pregunta (profesorado)</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Insertar Profesor</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Insertar Asignatura</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Eliminar Preguntas (personales)</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Eliminar Preguntas (profesorado)</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Eliminar Profesor</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Añadir Profesor</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Ver Resultados</a>
+          </li>
+        </ul>
+      </div>
+    </nav>
+  	<!--End Navbar-->
+  	<div class="container-fluid bg-1 text-center">
+		<div class="row">
+			<div class="col-sm-12S">
+				<img src="uca.jpg" class="img-responsive img-rounded" style="display:inline;width: 750px;" alt="uca">
+				<p class="linea-parrafo" >La industria de la tecnología es un medio en el que se producen cambios 
+				frecuentemente, por ello es necesario estar al día de la actualidad tecnológica. Por este motivo
+			 	hemos decidido llevar acabo este IV Congreso Internacional de Programación e Innovación.</p><br>
 
+				  
+			</div>
+		</div>
+
+	</div>
+	 <!-- Footer -->
 	<footer class="container-fluid bg-4 text-center">
 		<a href="#myPage" title="To Top">
     		<span class="glyphicon glyphicon-chevron-up"></span>
   		</a>
 		<p>Realizado por Adrián Quirós Martín y Mario Sepúlveda Cornejo</p> 
 	</footer>
-
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-  	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-  	
-	<script>
-	$(document).ready(function(){
-	  // Add smooth scrolling to all links in navbar + footer link
-	  $(".navbar a, footer a[href='#myPage']").on('click', function(event) {
-	    // Make sure this.hash has a value before overriding default behavior
-	    if (this.hash !== ""){
-	      // Prevent default anchor click behavior
-	      event.preventDefault();
-
-	      // Store hash
-	      var hash = this.hash;
-
-	      // Using jQuery's animate() method to add smooth page scroll
-	      // The optional number (900) specifies the number of milliseconds it takes to scroll to the specified area
-	      $('html, body').animate({
-	        scrollTop: $(hash).offset().top
-	      }, 900, function(){
-	   
-	        // Add hash (#) to URL when done scrolling (default click behavior)
-	        window.location.hash = hash;
-	      });
-	    } // End if
-	  });
-	})
-	</script>
-
-  	
+	<!-- Footer -->
+  	 <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
 </body>
 </html>
