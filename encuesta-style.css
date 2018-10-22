@@ -1,0 +1,53 @@
+h5 {
+  font-weight: bold; }
+
+header {
+  padding: 50px; }
+
+section {
+  padding: 50px; }
+  section h6 {
+    font-weight: bold; }
+  section #title-asignatura {
+    margin-bottom: 20px; }
+  section #title-pregUs {
+    margin-bottom: 20px;
+    text-align: center; }
+  section .preguntas-us {
+    padding: 20px;
+    border: 2px orange solid;
+    border-radius: 15px; }
+  section .valoraciones-prof {
+    margin-top: 80px;
+    margin-left: 15px;
+    border: 2px orange solid; }
+    section .valoraciones-prof .title-topic {
+      padding: 10px 10px;
+      background-color: orange; }
+    section .valoraciones-prof .title-subtopic {
+      margin-left: 10px;
+      margin-bottom: 10px;
+      font-weight: bold; }
+    section .valoraciones-prof .enunciado {
+      margin-left: 15px; }
+    section .valoraciones-prof th {
+      width: 90px;
+      padding: 0px;
+      font-weight: normal;
+      vertical-align: bottom; }
+    section .valoraciones-prof th:first-child {
+      width: 800px;
+      border-right: 2px orange solid; }
+    section .valoraciones-prof th:nth-child(n+2) {
+      padding-left: 10px;
+      font-size: 0.8em; }
+      section .valoraciones-prof th:nth-child(n+2) input {
+        vertical-align: bottom;
+        margin-left: 5px;
+        margin-bottom: 3px; }
+
+th {
+  width: 150px;
+  font-weight: normal; }
+
+/*# sourceMappingURL=encuesta-style.css.map */

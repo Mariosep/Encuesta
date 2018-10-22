@@ -1,0 +1,81 @@
+h5{
+ 	font-weight: bold;
+}
+
+
+header{
+	padding: 50px;
+}
+
+section{
+	padding: 50px;
+
+	h6{
+		font-weight: bold;
+	}
+
+	#title-asignatura{
+		margin-bottom: 20px;
+	}
+
+	#title-pregUs{
+		margin-bottom: 20px;
+		text-align: center;
+	}
+
+	.preguntas-us{
+		padding: 20px; 
+		border: 2px orange solid;
+		border-radius: 15px;
+	}
+
+	.valoraciones-prof{
+		margin-top: 80px;
+		margin-left: 15px;
+		border: 2px orange solid;
+
+		.title-topic{
+			padding: 10px 10px;
+			background-color: orange;
+		}
+
+		.title-subtopic{
+			margin-left: 10px;
+			margin-bottom: 10px;
+			font-weight: bold;
+		}
+
+		.enunciado{
+			margin-left: 15px;
+		}
+
+		th{
+			width: 90px;
+			padding: 0px;
+			font-weight: normal;
+			vertical-align: bottom;
+		}
+
+		th:first-child{
+			width: 800px;
+			border-right: 2px orange solid;
+		}
+
+		th:nth-child(n+2){
+			padding-left: 10px;
+			font-size: 0.8em;
+
+			input{
+				vertical-align: bottom;
+				margin-left: 5px;
+			}
+		}
+	}
+}
+
+
+th{
+	width: 150px;
+	font-weight: normal;
+}
+
