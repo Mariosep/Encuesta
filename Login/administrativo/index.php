@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 
-	<title>Congreso 2019</title>
+	<title>Encuesta</title>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -27,28 +27,16 @@
             <a class="nav-link" href="#">Inicio <span class="sr-only">(current)</span></a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">Insertar Pregunta (personal)</a>
+            <a class="nav-link" href="./pregunta_personal.php">Insertar/Eliminar Pregunta(s) personal(es)</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">Insertar Pregunta (profesorado)</a>
+            <a class="nav-link" href="#">Añadir/Eliminar Pregunta(s) profesorado</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">Insertar Profesor</a>
+            <a class="nav-link" href="#">Añadir/Eliminar Profesor</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">Insertar Asignatura</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">Eliminar Preguntas (personales)</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">Eliminar Preguntas (profesorado)</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">Eliminar Profesor</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">Añadir Profesor</a>
+            <a class="nav-link" href="#">Añadir/Eliminar Asignatura</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="#">Ver Resultados</a>
@@ -59,7 +47,7 @@
   	<!--End Navbar-->
   	<div class="container-fluid bg-1 text-center">
 		<div class="row">
-			<div class="col-sm-12S">
+			<div class="col-sm-12">
 				<img src="uca.jpg" class="img-responsive img-rounded" style="display:inline;width: 750px;" alt="uca">
 				<p class="linea-parrafo" >La industria de la tecnología es un medio en el que se producen cambios 
 				frecuentemente, por ello es necesario estar al día de la actualidad tecnológica. Por este motivo
