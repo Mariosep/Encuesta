@@ -1,0 +1,73 @@
+h5 {
+  font-weight: bold; }
+
+header {
+  padding: 50px; }
+
+section {
+  padding: 50px;
+  	/*.enunciados-prof{
+  		margin-top: 80px;
+  		border: 2px orange solid;
+  
+  		.title-topic{
+  			padding: 10px 10px;
+  			background-color: orange;
+  			
+  		}
+  
+  		.title-subtopic{
+  			font-weight: bold;
+  			padding: 6px 10px;
+  		}
+  
+  		.enunciado-prof{
+  			padding: 3px 10px;
+  			margin: 0px;
+  		}
+  	}*/ }
+  section h6 {
+    font-weight: bold; }
+  section #txt-pregUs {
+    text-align: center; }
+  section .preguntas-us {
+    padding: 20px;
+    border: 2px orange solid;
+    border-radius: 15px; }
+    section .preguntas-us table {
+      border: none; }
+      section .preguntas-us table .pregunta {
+        margin-bottom: 10px; }
+        section .preguntas-us table .pregunta input {
+          margin-left: 20px;
+          horizontal-align: top; }
+  section .valoraciones-prof {
+    margin-top: 80px;
+    margin-left: 15px;
+    border: 2px orange solid; }
+    section .valoraciones-prof .title-topic {
+      padding: 10px 10px;
+      margin-left: 0px;
+      background-color: orange; }
+    section .valoraciones-prof .title-subtopic {
+      font-weight: bold; }
+    section .valoraciones-prof th {
+      width: 100px;
+      height: 30px;
+      font-weight: normal;
+      vertical-align: bottom; }
+    section .valoraciones-prof th:first-child {
+      width: 800px;
+      border: 2px orange solid; }
+    section .valoraciones-prof .valoracion {
+      margin-bottom: 10px; }
+      section .valoraciones-prof .valoracion input {
+        margin-left: 20px;
+        horizontal-align: top; }
+
+th {
+  width: 150px;
+  height: 30px;
+  font-weight: normal; }
+
+/*# sourceMappingURL=encuesta.css.map */
