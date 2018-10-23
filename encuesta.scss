@@ -29,6 +29,20 @@ section{
 		border-radius: 15px;
 	}
 
+	.enunciado-us{
+		width: 550px;
+		height: 20px;
+	}
+
+	.respuesta-us{
+		font-size: 0.95em;
+		width: 200px;
+	}
+
+	#descripción{
+		margin-top: 80px;
+	}
+
 	.valoraciones-prof{
 		margin-top: 80px;
 		margin-left: 15px;
@@ -45,7 +59,7 @@ section{
 			font-weight: bold;
 		}
 
-		.enunciado{
+		.enunciado-prof{
 			margin-left: 15px;
 		}
 
@@ -57,7 +71,7 @@ section{
 		}
 
 		th:first-child{
-			width: 800px;
+			width: 1100px;
 			border-right: 2px orange solid;
 		}
 

@@ -1,3 +1,4 @@
+@charset "UTF-8";
 h5 {
   font-weight: bold; }
 
@@ -17,6 +18,14 @@ section {
     padding: 20px;
     border: 2px orange solid;
     border-radius: 15px; }
+  section .enunciado-us {
+    width: 550px;
+    height: 20px; }
+  section .respuesta-us {
+    font-size: 0.95em;
+    width: 200px; }
+  section #descripción {
+    margin-top: 80px; }
   section .valoraciones-prof {
     margin-top: 80px;
     margin-left: 15px;
@@ -28,7 +37,7 @@ section {
       margin-left: 10px;
       margin-bottom: 10px;
       font-weight: bold; }
-    section .valoraciones-prof .enunciado {
+    section .valoraciones-prof .enunciado-prof {
       margin-left: 15px; }
     section .valoraciones-prof th {
       width: 90px;
@@ -36,18 +45,17 @@ section {
       font-weight: normal;
       vertical-align: bottom; }
     section .valoraciones-prof th:first-child {
-      width: 800px;
+      width: 1100px;
       border-right: 2px orange solid; }
     section .valoraciones-prof th:nth-child(n+2) {
       padding-left: 10px;
       font-size: 0.8em; }
       section .valoraciones-prof th:nth-child(n+2) input {
         vertical-align: bottom;
-        margin-left: 5px;
-        margin-bottom: 3px; }
+        margin-left: 5px; }
 
 th {
   width: 150px;
   font-weight: normal; }
 
-/*# sourceMappingURL=encuesta-style.css.map */
+/*# sourceMappingURL=encuesta.css.map */
