@@ -107,9 +107,11 @@
 				<form action="">
 				  <table>
 				  	<?php
+				  		$preg_count = 0;
 					  	foreach ($preguntasus as $key) {
 							$enunciado = utf8_encode($key["enunciado"]);
 							$op_respuesta = explode("&",utf8_encode($key["op_respuesta"]));
+							$preg_count=$preg_count+1;
 
 
 							echo "<div class='pregunta'>
@@ -120,7 +122,7 @@
 					  			
 					  		for ($i = 1; $i <= count($op_respuesta); $i++) {
 					  			echo   "<th class='respuesta-us'>
-					  						<input type='radio' name=".$i." value=".$i."> ".$op_respuesta[$i-1]."
+					  						<input type='radio' name=".$preg_count." value=".$i."> ".$op_respuesta[$i-1]."
 					  					</th>";
 					  		}
 
