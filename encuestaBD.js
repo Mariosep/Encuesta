@@ -14,7 +14,7 @@ $(document).ready(function() {
 	   /*if($("select[name=prof-1]").val() == 0){
 	  	alert("El profesor debe impartir la asignatura seleccionada.");
 	  	event.preventDefault();*/
-	  }
+	  //}
 	})
 
 	$("select[name=prof-1]").change(function() {

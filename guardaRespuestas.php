@@ -35,7 +35,6 @@ if(isset($_POST['select-asignatura']) && !$_SESSION['isset']){
 		$n_pregUs = mysqli_fetch_assoc($n_pregUs);
 
 		for($i=1; $i<=(int)$n_pregUs['n_pregUs']; $i++){
-
 			$resp = $_POST[$i."-us"];
 			/*echo "<br>";
 			echo $id_encuesta[0]." ";
@@ -49,8 +48,8 @@ if(isset($_POST['select-asignatura']) && !$_SESSION['isset']){
 		$n_pregProf = mysqli_query($mysqli,  utf8_decode($query))or die("Fallo al seleccionar total de pregProf");
 		$n_pregProf = mysqli_fetch_assoc($n_pregProf);
 
+		$asignatura = $_POST['select-asignatura'];
 		for($nprof=1; $nprof<=3; $nprof++){
-
 			if ($_POST['prof-'.$nprof] != 0){
 				for($i=1; $i<=(int)$n_pregProf['n_pregProf']; $i++){
 					$id_prof = $_POST['prof-'.$nprof];
@@ -60,7 +59,7 @@ if(isset($_POST['select-asignatura']) && !$_SESSION['isset']){
 					echo $id_prof." ";
 					echo $i." ";
 					echo $resp." ";*/
-					$query = "INSERT INTO respuestasprof (id_encuesta, id_profesor, id_preg_prof, respuesta) VALUES (".$id_encuesta[0].", ".$id_prof.", ".$i.", ".$resp.")";
+					$query = "INSERT INTO respuestasprof (id_encuesta, id_asignatura, id_profesor, id_preg_prof, respuesta) VALUES (".$id_encuesta[0].", ".$asignatura.", ".$id_prof.", ".$i.", ".$resp.")";
 					mysqli_query($mysqli,  utf8_decode($query))or die("Fallo al insertar respuestasprof");
 				}
 			}
