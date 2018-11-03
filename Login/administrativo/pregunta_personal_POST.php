@@ -28,6 +28,7 @@
   ?>
 	<!--Navbar-->
 	<nav class="navbar navbar-dark bg-dark">
+      <img src="Logo_UCA.png" class="img-responsive img-rounded" style="display:inline;width: 40px;" alt="uca">
       <a class="navbar-brand" href="#">Añadir/Eliminar Pregunta(s) personal(es)</a>
       <button class="navbar-toggler collapsed" type="button" data-toggle="collapse" data-target="#navbarsExample01" aria-controls="navbarsExample01" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
@@ -42,16 +43,19 @@
             <a class="nav-link" href="#">Añadir/Eliminar Pregunta(s) personal(es)<span class="sr-only">(current)</span></a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">Añadir/Eliminar Pregunta(s) profesorado</a>
+            <a class="nav-link" href="./pregunta_profesor.php">Añadir/Eliminar Pregunta(s) profesorado</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">Añadir/Eliminar Profesor</a>
+            <a class="nav-link" href="./profesor.php">Añadir/Eliminar Profesor/a(es/as)</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">Añadir/Eliminar Asignatura</a>
+            <a class="nav-link" href="./asignatura.php">Añadir/Eliminar Asignatura(s)</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">Ver Resultados</a>
+            <a class="nav-link" href="./tipo_subtipo.php">Añadir/Eliminar Tipo(s)/Subtipo(s)</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="./resultados.php">Ver Resultados</a>
           </li>
         </ul>
       </div>
@@ -119,12 +123,12 @@
                           or die ("Fallo en la Eliminación");
                           }
 
-                          print ("<P>Número total de noticias eliminadas: " . $nfilas . "</P>\n");
+                          print ("<P>Número total de preguntas eliminadas: " . $nfilas . "</P>\n");
                           
                           }
                       }
               ?>
-             <P>[ <A HREF='pregunta_personal.php'>Añadir/Eliminar más noticias</A> ]</P>
+             <P>[ <A HREF='pregunta_personal.php'>Añadir/Eliminar más Pregunta(s) personal(es)</A> ]</P>
           </div>
         </div>
       </div>

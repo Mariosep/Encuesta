@@ -134,7 +134,7 @@ $_SESSION['isset'] = false;
 
 						for ($i = 0; $i < count($op_respuesta); $i++) {
 							echo   "<th class='respuesta-us'>
-							<input type='radio' name=".utf8_encode($key["id_preg_us"])."-us value=".$i." required> ".$op_respuesta[$i]."
+							<input type='radio' name=".utf8_encode($key["id_preg_us"])."-us value=".$i." > ".$op_respuesta[$i]."
 							</th>";
 						}
 

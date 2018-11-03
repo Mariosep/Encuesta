@@ -72,6 +72,7 @@
 	mysqli_query($mysqli, utf8_decode($query))
 	or die ("Fallo al añadir tiposubtipopregprof");
 
+
 	
 ?>
 

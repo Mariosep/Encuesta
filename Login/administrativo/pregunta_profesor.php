@@ -11,13 +11,28 @@
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 
 	<link rel="stylesheet" type="text/css" href="estilo.css">
+  <style type="text/css">
+    .table-wrapper-scroll-y {
+      display: block;
+      max-height: 550px;
+      overflow-y: auto;
+      -ms-overflow-style: -ms-autohiding-scrollbar;
+    }
+  </style>
 </head>
 <body id="myPage">
- 
+  <?php
+    $user="root";
+    $password="";
+    $database="encuesta";
+
+     $mysqli = mysqli_connect("localhost", $user, $password, $database)
+     or die ("Error al acceder a la base de datos");
+ ?>
 	<!--Navbar-->
 	<nav class="navbar navbar-dark bg-dark">
       <img src="Logo_UCA.png" class="img-responsive img-rounded" style="display:inline;width: 40px;" alt="uca">
-      <a class="navbar-brand" href="#">Insertar/Eliminar Pregunta(s) personal(es)</a>
+      <a class="navbar-brand" href="#">Añadir/Eliminar Pregunta(s) profesorado</a>
       <button class="navbar-toggler collapsed" type="button" data-toggle="collapse" data-target="#navbarsExample01" aria-controls="navbarsExample01" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
@@ -27,11 +42,11 @@
           <li class="nav-item ">
             <a class="nav-link" href="./index.php">Inicio </a>
           </li>
-          <li class="nav-item active">
-            <a class="nav-link" href="#">Añadir/Eliminar Pregunta(s) personal(es)<span class="sr-only">(current)</span></a>
-          </li>
           <li class="nav-item">
-            <a class="nav-link" href="./pregunta_profesor.php">Añadir/Eliminar Pregunta(s) profesorado</a>
+            <a class="nav-link" href="./pregunta_personal.php">Añadir/Eliminar Pregunta(s) personal(es)</a>
+          </li>
+          <li class="nav-item active">
+            <a class="nav-link" href="#">Añadir/Eliminar Pregunta(s) profesorado<span class="sr-only">(current)</span></a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="./profesor.php">Añadir/Eliminar Profesor/a(es/as)</a>
@@ -54,7 +69,7 @@
 		<div class="row">
 			<div class="col-sm-5" >
         
-        <form action="./pregunta_personal_POST.php" method=post>
+        <form action="./pregunta_profesor_POST.php" method=post>
           <div class="card" style="background-color:#394a66;border:0px;"> 
 
               <div class="card-body" >
@@ -71,7 +86,33 @@
                       <textarea class="form-control" rows="6" id="resp_op" placeholder="Añada las respuestas posibles separadas por &" name="res_op" required></textarea>                     
                       
                   </div>
-                  
+                  <div class="form-group"> 
+                      <label for="exampleFormControlSelect1">Tipo al que pertenece</label>
+                      <select class="form-control" id="exampleFormControlSelect1" name="tipo_select">
+                         <?php
+
+                              $query="SELECT * from tipopreguntaprof";
+                              $query_res = mysqli_query($mysqli,$query);
+                              while($res =  mysqli_fetch_assoc($query_res)){
+                                print("<option value=".$res['cod_tip'].">".utf8_encode($res['nombre_tipo'])."</option>");
+                              }
+                         ?>
+                      </select>
+                  </div> 
+                  <div class="form-group"> 
+                      <label for="exampleFormControlSelect1">Subtipo al que pertenece</label>
+                      <select class="form-control" id="exampleFormControlSelect1" name="subtipo_select">
+                         <?php
+
+                              $query="SELECT * from subtipopreguntaprof";
+                              $query_res = mysqli_query($mysqli,$query);
+                              print("<option value=".NULL.">"."No pertenece a ningún Subtipo"."</option>");
+                              while($res =  mysqli_fetch_assoc($query_res)){
+                                print("<option value=".$res['cod_sub_tip'].">".utf8_encode($res['nombre_subtipo'])."</option>");
+                              }
+                         ?>
+                      </select>
+                  </div> 
                   <div class="form-group">                         
                   <button type="submit" name="añadir" class="btn btn-primary mb-2">Añadir</button>
                   </div>
@@ -86,18 +127,12 @@
         <div class="card" style="background-color:#394a66;border:0px;"> 
           <div class="card-body" >
           <?php
-              $user="root";
-              $password="";
-              $database="encuesta";
-
-
-              $mysqli = mysqli_connect("localhost", $user, $password, $database)
-              or die ("Error al acceder a la base de datos");
-              $query="SELECT * from preguntasus";
+             
+              $query="SELECT * from preguntasprof";
               $query_res = mysqli_query($mysqli,$query);
               if($res = mysqli_fetch_assoc($query_res)){
                 ?>
-                <form action='./pregunta_personal_POST.php' method='post'>
+                <form action='./pregunta_profesor_POST.php' method='post'>
                 <div class="table-responsive table-wrapper-scroll-y">               
                 <table class="table table-bordered table-striped">
                 <thead>
@@ -116,7 +151,7 @@
                 print ("<TD>" .  utf8_encode($res['enunciado']) . "</TD>\n");
                 print ("<TD>" .  utf8_encode($res['op_respuesta']). "</TD>\n");
                 print ("<TD><INPUT TYPE='CHECKBOX' NAME='borrar[]' VALUE='" .
-                $res['id_preg_us'] . "'></TD>\n");
+                $res['id_preg_prof'] . "'></TD>\n");
                 print ("</TR>\n");
 
                 while($res = mysqli_fetch_assoc($query_res)){
@@ -125,7 +160,7 @@
                   print ("<TD>" .  utf8_encode($res['enunciado']) . "</TD>\n");
                   print ("<TD>" .  utf8_encode($res['op_respuesta']). "</TD>\n");
                   print ("<TD><INPUT TYPE='CHECKBOX' NAME='borrar[]' VALUE='" .
-                  $res['id_preg_us'] . "'></TD>\n");
+                  $res['id_preg_prof'] . "'></TD>\n");
                   print ("</TR>\n");
                 }
                 print("</tbody>");
