@@ -106,6 +106,7 @@
 
 	$query="CREATE TABLE RespuestasProf(
 		id_encuesta int NOT NULL,
+		id_asignatura int NOT NULL,
 		id_profesor int NOT NULL,
 		id_preg_prof int NOT NULL,
 		respuesta int NOT NULL,

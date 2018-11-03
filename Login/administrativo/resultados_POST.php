@@ -74,6 +74,34 @@
                   {
                      if($profesor != "" || $asignatura != "" )
                      {
+                        if($asignatura != ""){
+
+                          $instruccion ="SELECT id_preg_prof,respuesta FROM respuestasprof where id_asignatura =\"$asignatura\";";
+                          $res = mysqli_query($mysqli, $instruccion)
+                          or die("Error al tomar las respuestas");
+
+                          $query ="SELECT * FROM preguntasprof;";
+                          $select = mysqli_query($mysqli, $query)
+                          or die("Error al tomar el numero de rows de preguntasprof");
+                          $n_preguntas = mysqli_num_rows ($select);
+
+                          $v_counter = 0;
+                          while($resultado = mysqli_fetch_assoc($res)){
+                            $temp = $resultado['id_preg_prof'];
+                            $v_counter[$temp] += $resultado['respuesta'];
+                          }
+
+                          foreach($select as $row){
+                            $temp = $row['id_preg_prof'];
+                            $v_counter[$temp] = $v_counter[$temp]/$n_preguntas;
+                            print($v_counter[$temp]);
+                          }
+                          
+
+
+                        }else{
+
+                        }
                         
                      }else{
                         print ("No es posible realizar el filtrado, no se ha seleccionado ningun filtro.\n");
