@@ -43,7 +43,7 @@
 	$query="CREATE TABLE Encuesta(
 		id_encuesta int NOT NULL AUTO_INCREMENT  PRIMARY KEY,
 		fecha_init datetime NOT NULL,
-		fecha_fin datetime NOT NULL,
+		fecha_fin datetime,
 		es_terminada boolean NOT NULL
 		)";
 	mysqli_query($mysqli, $query) or die("Fallo al crear Encuesta");
