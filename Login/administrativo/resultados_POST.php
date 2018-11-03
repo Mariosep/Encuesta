@@ -9,6 +9,7 @@
   
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+   
 
   <link rel="stylesheet" type="text/css" href="estilo.css">
 </head>
@@ -67,7 +68,7 @@
     <div class="container-fluid bg-1 ">
     <div class="row">
       <div class="col-sm-6" >
-        <div class="card" style="background-color:#394a66;border:0px;"> 
+        <div class="card" style="background-color:#d0daea;border:0px;"> 
           <div class="card-body">
               <?php
                   if (isset($filtrar))
@@ -83,22 +84,60 @@
                           $query ="SELECT * FROM preguntasprof;";
                           $select = mysqli_query($mysqli, $query)
                           or die("Error al tomar el numero de rows de preguntasprof");
-                          $n_preguntas = mysqli_num_rows ($select);
+                          
 
-                          $v_counter = 0;
+                          $v_counter = array();
+                          $n_counter = array();
                           while($resultado = mysqli_fetch_assoc($res)){
-                            $temp = $resultado['id_preg_prof'];
-                            $v_counter[$temp] += $resultado['respuesta'];
+                            //Ignoramos la respuestas NS/NC
+                            if($resultado['respuesta'] != 0){  
+                              $temp = $resultado['id_preg_prof'];
+                              $v_counter[$temp] += $resultado['respuesta'];
+                              $n_counter[$temp] += 1;
+                            }
                           }
+                          $dates = "";
+                          $values ="";
+                          while($resultado = mysqli_fetch_assoc($select)){
+                            $temp =  $resultado['id_preg_prof'];
+                            $v_counter[$temp] = $v_counter[$temp]/$n_counter[$temp];
 
-                          foreach($select as $row){
-                            $temp = $row['id_preg_prof'];
-                            $v_counter[$temp] = $v_counter[$temp]/$n_preguntas;
-                            print($v_counter[$temp]);
+                            $dates = $dates."\"".$resultado['id_preg_prof']."\",";
+                            $values = $values.$v_counter[$temp].",";
+                            
                           }
+                          $dates = trim($dates,",");
+                          $values = trim($values,",");
+                          ?>
+
+                          <canvas id="myChart"></canvas>
+                          <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
+                          <script type="text/javascript">
+                            var ctx = document.getElementById('myChart').getContext('2d');
+                            var chart = new Chart(ctx, {
+                                // The type of chart we want to create
+                                type: 'bar',
+
+                                // The data for our dataset
+                                data: {
+                                    labels: [<?php  echo $dates;?>],
+                                    datasets: [{
+                                        label: "Medias de cada pregunta",
+                                        backgroundColor: 'rgb(106, 140, 193)',
+                                        borderColor: 'rgb(77, 102, 142)',
+                                        data: [<?php  echo $values;?>],
+                                    }]
+                                },
+
+                                // Configuration options go here
+                                options: {}
+                            });
+                          </script>
                           
 
 
+
+                          <?php
                         }else{
 
                         }
@@ -110,7 +149,7 @@
                       mysqli_close ($mysqli);
                   }
               ?>
-             <P>[ <A HREF='resultados.php'>Seleccionar otro filtro</A> ]</P>
+             <P>[ <A HREF='resultados.php' style="color:#4d668e;">Seleccionar otro filtro</A> ]</P>
           </div>
         </div>
       </div>
