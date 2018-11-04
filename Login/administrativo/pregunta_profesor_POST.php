@@ -80,7 +80,7 @@
                      $instruccion ="SELECT * FROM tiposubtipo where cod_tip =\"$tipo_select\" and cod_sub_tip = \"$subtipo_select\"";
                      $res = mysqli_query($mysqli, $instruccion)
                      or die("Error al tomar cod del subtipo");
-                     if(($aceptado= mysqli_fetch_assoc($res) || $subtipo_select=="")&&($aceptado= mysqli_fetch_assoc($res) && $subtipo_select!="") )
+                     if(($aceptado= mysqli_fetch_assoc($res) || $subtipo_select=="")||($aceptado= mysqli_fetch_assoc($res) && $subtipo_select!="") )
                      {
                          $query="INSERT INTO preguntasprof (id_preg_prof, enunciado, op_respuesta) VALUES (NULL, '$enunciado', '$res_op');";
                            mysqli_query($mysqli, utf8_decode($query))
