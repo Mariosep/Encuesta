@@ -2,15 +2,17 @@
 <html>
 
 <head>
-	<meta http-equiv="Content-type" content="text/html; charset=utf-8" />
-	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<link rel="stylesheet" href="guardaRespuestas.css">
+<meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+<script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.3.1.min.js"></script>
+<script src="guardaRespuestas.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="guardaRespuestas.css">
 </head>
 
 <?php
-$arr = get_defined_vars();
-print_r($arr["_POST"]);
+/*$arr = get_defined_vars();
+print_r($arr["_POST"]);*/
 
 session_start();
 
@@ -21,21 +23,28 @@ $database="encuesta";
 $mysqli = mysqli_connect("localhost", $user, $password, $database)
 or die ("Error al acceder a la base de datos");
 
-if(isset($_POST['select-asignatura']) && !$_SESSION['isset']){
-		$date = $_SESSION['date'];
-		$query = "INSERT INTO encuesta (fecha_init, fecha_fin, es_terminada) VALUES('$date', CURRENT_TIME(), 1)";
-		mysqli_query($mysqli,  utf8_decode($query))or die("Fallo al actualizar la encuesta");
+if(isset($_POST['select-asignatura']) && !$_SESSION['es_terminada']){
 
-		$query = "SELECT max(id_encuesta) 'id_encuesta' FROM encuesta";
-		$id_encuesta = mysqli_query($mysqli,  utf8_decode($query))or die("Fallo al seleccionar id_encuesta");
-		$id_encuesta = mysqli_fetch_row($id_encuesta);
+$coincide = Comprueba_AsigProf($mysqli);
 
-		$query = "SELECT count(id_preg_us) 'n_pregUs' FROM preguntasus";
-		$n_pregUs = mysqli_query($mysqli,  utf8_decode($query))or die("Fallo al seleccionar total de pregUs");
-		$n_pregUs = mysqli_fetch_assoc($n_pregUs);
+if ($coincide){
 
-		for($i=1; $i<=(int)$n_pregUs['n_pregUs']; $i++){
-			$resp = $_POST[$i."-us"];
+	$date = $_SESSION['date'];
+	$query = "UPDATE encuesta SET fecha_fin = CURRENT_TIME(), es_terminada = 1 WHERE fecha_init = '$date'";
+	mysqli_query($mysqli,  utf8_decode($query))or die("Fallo al actualizar la encuesta");
+	$_SESSION['es_terminada'] = 1;
+
+	$query = "SELECT max(id_encuesta) 'id_encuesta' FROM encuesta";
+	$id_encuesta = mysqli_query($mysqli,  utf8_decode($query))or die("Fallo al seleccionar id_encuesta");
+	$id_encuesta = mysqli_fetch_row($id_encuesta);
+
+	$query = "SELECT count(id_preg_us) 'n_pregUs' FROM preguntasus";
+	$n_pregUs = mysqli_query($mysqli,  utf8_decode($query))or die("Fallo al seleccionar total de pregUs");
+	$n_pregUs = mysqli_fetch_assoc($n_pregUs);
+
+
+	for($i=1; $i<=(int)$n_pregUs['n_pregUs']; $i++){
+		$resp = $_POST[$i."-us"];
 			/*echo "<br>";
 			echo $id_encuesta[0]." ";
 			echo $i." ";
@@ -64,17 +73,75 @@ if(isset($_POST['select-asignatura']) && !$_SESSION['isset']){
 				}
 			}
 		}
-
-		$_SESSION['isset'] = true;
 	}
+	else{
+		echo "El profesor no pertenece a la asignatura";
+	}
+}
+
+
+BorrarEncuestasNulas($mysqli);
+BorrarEncuestasNoValidas($mysqli);
+
+
+function Comprueba_AsigProf($mysqli){
+	$asignatura = $_POST['select-asignatura'];
+	for($i=1; $i<=3; $i++){
+		$id_prof = $_POST['prof-'.$i];
+		if ($id_prof != 0){
+			$query =  "SELECT 'count(*)' FROM asignaturaprofesor WHERE id_asignatura = ".$asignatura." and id_profesor = ".$id_prof;
+			$pertenece = mysqli_query($mysqli,  utf8_decode($query))or die("Fallo al buscar coincidencias asignaturaprofesor");
+			if(!isset($pertenece)){
+				return 0;
+			}
+		}	
+	}
+	return 1;
+}
+
+function BorrarEncuestasNulas($mysqli){
+
+	$query = "SELECT * FROM encuesta WHERE es_terminada = 0";
+	$encuestas = mysqli_query($mysqli,  utf8_decode($query))or die("Fallo al seleccionar encuestas nulas");
+	foreach ($encuestas as $key) {
+		date_default_timezone_set('Europe/Madrid');
+		$f_init = date_create($key['fecha_init']);
+		$f_actual = date_create(date('Y-m-d H:i:s'));
+		
+		$f_max = date_add( $f_init, date_interval_create_from_date_string('15 minutes'));
+
+		if ($f_actual > $f_max){
+			$query = "DELETE FROM encuesta WHERE id_encuesta = ".$key['id_encuesta'];
+			$encuestas = mysqli_query($mysqli, $query) or die("Fallo al eliminar encuestas nulas");
+		}
+	}
+}
+
+function BorrarEncuestasNoValidas($mysqli){
+
+	$query = "SELECT * FROM encuesta WHERE es_terminada = 1";
+	$encuestas = mysqli_query($mysqli,  utf8_decode($query))or die("Fallo al seleccionar encuestas nulas");
+	foreach ($encuestas as $key) {
+		date_default_timezone_set('Europe/Madrid');
+		$f_init = date_create($key['fecha_init']);
+		$f_fin = date_create($key['fecha_fin']);
+		
+		$f_min = date_add( $f_init, date_interval_create_from_date_string('1 minutes'));
+
+		if ($f_fin < $f_min){
+			$query = "DELETE FROM encuesta WHERE id_encuesta = ".$key['id_encuesta'];
+			$encuestas = mysqli_query($mysqli, $query) or die("Fallo al eliminar encuestas nulas");
+		}
+	}
+}
 
 ?>
 
 
-<body>
-<section>
-	<h3>Encuesta registrada con éxito</h3>
-</section>
+<body onload="nobackbutton();">
+	<section>
+		<h3>Encuesta registrada con éxito</h3>
+	</section>
 </body>
 
 </html>

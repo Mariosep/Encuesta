@@ -22,11 +22,14 @@ section{
 	}
 
 	#title-pregUs{
+		margin-left: 200px;
 		margin-bottom: 20px;
 		text-align: center;
 	}
 
 	.preguntas-us{
+		display: right;
+		margin-left: 200px;
 		padding: 20px; 
 		border: 2px orange solid;
 		border-radius: 15px;
@@ -123,7 +126,8 @@ section{
 	#enviar{
 		margin-top: 30px;
 		margin-bottom: 50px;
-		margin-left: 500px;
+		margin-left: 100px;
+		display: center;
 		padding-left: 17px;
 		padding-right: 17px;
 		padding-top: 5px;

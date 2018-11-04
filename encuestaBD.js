@@ -10,11 +10,6 @@ $(document).ready(function() {
 	  	alert("Debe seleccionar un profesor.");
 	  	event.preventDefault();
 	  }
-
-	   /*if($("select[name=prof-1]").val() == 0){
-	  	alert("El profesor debe impartir la asignatura seleccionada.");
-	  	event.preventDefault();*/
-	  //}
 	})
 
 	$("select[name=prof-1]").change(function() {

@@ -55,9 +55,6 @@ $asignatura  = mysqli_query($mysqli, $query) or die("Fallo al seleccionar asigna
 $query = "SELECT * FROM asignaturaprofesor";
 $asignaturaprofesor = mysqli_query($mysqli, $query) or die("Fallo al seleccionar asignaturaprofesor");
 
-$query = "SELECT * FROM encuesta";
-$encuesta = mysqli_query($mysqli, $query) or die("Fallo al seleccionar encuesta");
-
 $query = "SELECT * FROM preguntasus";
 $preguntasus = mysqli_query($mysqli, $query) or die("Fallo al seleccionar preguntasus");
 
@@ -82,8 +79,12 @@ $respuestasprof = mysqli_query($mysqli, $query) or die("Fallo al seleccionar res
 
 date_default_timezone_set('Europe/Madrid');
 session_start();
-$_SESSION['date'] = date('Y-m-d H:i:s');
+$date = date('Y-m-d H:i:s');
+$_SESSION['date'] = $date;
 $_SESSION['isset'] = false;
+$_SESSION['es_terminada'] = 0; 
+$query = "INSERT INTO encuesta (fecha_init, es_terminada) VALUES('$date', 0)";
+mysqli_query($mysqli,  utf8_decode($query))or die("Fallo al insertar la encuesta");
 ?>
 
 
@@ -123,7 +124,7 @@ $_SESSION['isset'] = false;
 
 						for ($i = 0; $i < count($op_respuesta); $i++) {
 							echo   "<th class='respuesta-us'>
-							<input type='radio' name=".utf8_encode($key["id_preg_us"])."-us value=".$i." > ".$op_respuesta[$i]."
+							<input type='radio' name=".utf8_encode($key["id_preg_us"])."-us value=".$i." required> ".$op_respuesta[$i]."
 							</th>";
 						}
 
@@ -133,7 +134,8 @@ $_SESSION['isset'] = false;
 					?>
 				</table>
 			</div>
-			</div>
+		</div>
+	</div>
 
 			<div  id="select-prof">
 				<h6 id="title-profesores">PROFESORES</h6>
@@ -158,7 +160,7 @@ $_SESSION['isset'] = false;
 			<div class="row">
 				<table class="valoraciones-prof">
 					<?php
-
+					$cont_preg = 1;
 					for ($x=0; $x<mysqli_num_rows($tipopreguntaprof); $x++) {
 						$key = mysqli_fetch_assoc($tipopreguntaprof);
 						$cod_tip = utf8_encode($key["cod_tip"]);
@@ -201,16 +203,18 @@ $_SESSION['isset'] = false;
 
 									if ($j == 0){
 										echo "
-										<span class='enunciado-prof'>".utf8_encode($pregunta["id_preg_prof"]).". ".utf8_encode($pregunta["enunciado"])."</span>
+										<span class='enunciado-prof'>".$cont_preg.". ".utf8_encode($pregunta["enunciado"])."</span>
 										</th>";
 									}
 									else{
 
 										echo "<tr>
 										<th>
-										<span class='enunciado-prof'>".utf8_encode($pregunta["id_preg_prof"]).". ".utf8_encode($pregunta["enunciado"])."</span>
+										<span class='enunciado-prof'>".$cont_preg.". ".utf8_encode($pregunta["enunciado"])."</span>
 										</th>";
 									}
+									$cont_preg++;
+									
 									$op_respuesta = explode("&",utf8_encode($pregunta["op_respuesta"])); 
 									for($nprof = 1; $nprof <= 3; $nprof++){
 										for ($z = 0; $z < count($op_respuesta); $z++) {
@@ -236,14 +240,15 @@ $_SESSION['isset'] = false;
 
 								$pregunta = mysqli_fetch_assoc($pregunta);
 								if($j == 0){
-									echo "	<span class='enunciado-prof'>".utf8_encode($pregunta["id_preg_prof"]).". ".utf8_encode($pregunta["enunciado"])."</span>
+									echo "	<span class='enunciado-prof'>".$cont_preg.". ".utf8_encode($pregunta["enunciado"])."</span>
 									  	 </th>";
 								}else{
 									echo "<tr>
 											<th>
-										  	<span class='enunciado-prof'>".utf8_encode($pregunta["id_preg_prof"]).". ".utf8_encode($pregunta["enunciado"])."</span>
+										  	<span class='enunciado-prof'>".$cont_preg.". ".utf8_encode($pregunta["enunciado"])."</span>
 										  	</th>";
 								}
+								$cont_preg++;
 								
 								$op_respuesta = explode("&",utf8_encode($pregunta["op_respuesta"])); 
 								for($nprof = 1; $nprof <= 3; $nprof++){
@@ -261,8 +266,9 @@ $_SESSION['isset'] = false;
 					?>
 				</table>
 			</div>
-
+			<div class="container">
 				<input type="submit" name="submit" value="Enviar" id="enviar">
+			</div>
 		</form>
 
 	</section>
