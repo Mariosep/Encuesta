@@ -43,12 +43,12 @@ if ($coincide){
 	
 
 	foreach ($id_preg_us as $key) {
-		$resp = $_POST[$key."-us"];
+		$resp = $_POST[$key['id_preg_us']."-us"];
 		/*echo "<br>";
 		echo $id_encuesta[0]." ";
 		echo $i." ";
 		echo $resp." ";*/
-		$query = "INSERT INTO respuestasus (id_encuesta, id_preg_us, respuesta) VALUES (".$id_encuesta[0].", ".$key.", ".$resp.")";
+		$query = "INSERT INTO respuestasus (id_encuesta, id_preg_us, respuesta) VALUES (".$id_encuesta[0].", ".$key['id_preg_us'].", ".$resp.")";
 		mysqli_query($mysqli,  utf8_decode($query))or die("Fallo al insertar respuestasus");
 	}
 
@@ -60,13 +60,13 @@ if ($coincide){
 			if ($_POST['prof-'.$nprof] != 0){
 				foreach ($id_preg_prof as $key) {
 					$id_prof = $_POST['prof-'.$nprof];
-					$resp = $_POST[$i."-prof-".$nprof];
+					$resp = $_POST[$key['id_preg_prof']."-prof-".$nprof];
 					/*echo "<br>";
 					echo $id_encuesta[0]." ";
 					echo $id_prof." ";
 					echo $i." ";
 					echo $resp." ";*/
-					$query = "INSERT INTO respuestasprof (id_encuesta, id_asignatura, id_profesor, id_preg_prof, respuesta) VALUES (".$id_encuesta[0].", ".$asignatura.", ".$id_prof.", ".$key.", ".$resp.")";
+					$query = "INSERT INTO respuestasprof (id_encuesta, id_asignatura, id_profesor, id_preg_prof, respuesta) VALUES (".$id_encuesta[0].", ".$asignatura.", ".$id_prof.", ".$key['id_preg_prof'].", ".$resp.")";
 					mysqli_query($mysqli,  utf8_decode($query))or die("Fallo al insertar respuestasprof");
 				}
 			}
