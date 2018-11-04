@@ -38,29 +38,27 @@ if ($coincide){
 	$id_encuesta = mysqli_query($mysqli,  utf8_decode($query))or die("Fallo al seleccionar id_encuesta");
 	$id_encuesta = mysqli_fetch_row($id_encuesta);
 
-	$query = "SELECT count(id_preg_us) 'n_pregUs' FROM preguntasus";
-	$n_pregUs = mysqli_query($mysqli,  utf8_decode($query))or die("Fallo al seleccionar total de pregUs");
-	$n_pregUs = mysqli_fetch_assoc($n_pregUs);
+	$query = "SELECT id_preg_us FROM preguntasus";
+	$id_preg_us = mysqli_query($mysqli,  utf8_decode($query))or die("Fallo al seleccionar total de pregUs");
+	
 
+	foreach ($id_preg_us as $key) {
+		$resp = $_POST[$key."-us"];
+		/*echo "<br>";
+		echo $id_encuesta[0]." ";
+		echo $i." ";
+		echo $resp." ";*/
+		$query = "INSERT INTO respuestasus (id_encuesta, id_preg_us, respuesta) VALUES (".$id_encuesta[0].", ".$key.", ".$resp.")";
+		mysqli_query($mysqli,  utf8_decode($query))or die("Fallo al insertar respuestasus");
+	}
 
-	for($i=1; $i<=(int)$n_pregUs['n_pregUs']; $i++){
-		$resp = $_POST[$i."-us"];
-			/*echo "<br>";
-			echo $id_encuesta[0]." ";
-			echo $i." ";
-			echo $resp." ";*/
-			$query = "INSERT INTO respuestasus (id_encuesta, id_preg_us, respuesta) VALUES (".$id_encuesta[0].", ".$i.", ".$resp.")";
-			mysqli_query($mysqli,  utf8_decode($query))or die("Fallo al insertar respuestasus");
-		}
-
-		$query = "SELECT count(id_preg_prof) 'n_pregProf' FROM preguntasprof";
-		$n_pregProf = mysqli_query($mysqli,  utf8_decode($query))or die("Fallo al seleccionar total de pregProf");
-		$n_pregProf = mysqli_fetch_assoc($n_pregProf);
+		$query = "SELECT id_preg_prof FROM preguntasprof";
+		$id_preg_prof= mysqli_query($mysqli,  utf8_decode($query))or die("Fallo al seleccionar total de pregProf");
 
 		$asignatura = $_POST['select-asignatura'];
 		for($nprof=1; $nprof<=3; $nprof++){
 			if ($_POST['prof-'.$nprof] != 0){
-				for($i=1; $i<=(int)$n_pregProf['n_pregProf']; $i++){
+				foreach ($id_preg_prof as $key) {
 					$id_prof = $_POST['prof-'.$nprof];
 					$resp = $_POST[$i."-prof-".$nprof];
 					/*echo "<br>";
@@ -68,7 +66,7 @@ if ($coincide){
 					echo $id_prof." ";
 					echo $i." ";
 					echo $resp." ";*/
-					$query = "INSERT INTO respuestasprof (id_encuesta, id_asignatura, id_profesor, id_preg_prof, respuesta) VALUES (".$id_encuesta[0].", ".$asignatura.", ".$id_prof.", ".$i.", ".$resp.")";
+					$query = "INSERT INTO respuestasprof (id_encuesta, id_asignatura, id_profesor, id_preg_prof, respuesta) VALUES (".$id_encuesta[0].", ".$asignatura.", ".$id_prof.", ".$key.", ".$resp.")";
 					mysqli_query($mysqli,  utf8_decode($query))or die("Fallo al insertar respuestasprof");
 				}
 			}
