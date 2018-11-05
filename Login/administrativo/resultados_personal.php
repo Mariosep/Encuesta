@@ -75,7 +75,7 @@
       <div class="col-sm-4" >
         
         <form action="./resultados_personal_POST.php" method=post>
-          <div class="card" style="background-color:#394a66;border:0px;margin-bottom: 240px;"> 
+          <div class="card" style="background-color:#394a66;border:0px;margin-bottom: 190px;"> 
               <div class="card-body" >
                    <div class="row">
                     <div class="col-sm-12" >

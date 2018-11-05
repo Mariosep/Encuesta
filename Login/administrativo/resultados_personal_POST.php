@@ -22,6 +22,13 @@
       overflow-y: auto;
       -ms-overflow-style: -ms-autohiding-scrollbar;
     }
+    .canvas-container{
+
+      width:300px ;
+      height:300px ;
+      margin-bottom: 50px;
+
+    }
   </style>
 </head>
 <body id="myPage">
@@ -68,8 +75,8 @@
           <li class="nav-item">
             <a class="nav-link" href="./tipo_subtipo.php">Añadir/Eliminar Tipo(s)/Subtipo(s)</a>
           </li>
-          <li class="nav-item active">
-            <a class="nav-link" href="./resultados.php">Ver Resultado(s) de Pregunta(s) profesorado<span class="sr-only">(current)</span></a>
+          <li class="nav-item">
+            <a class="nav-link" href="./resultados.php">Ver Resultado(s) de Pregunta(s) profesorado</a>
           </li>
           <li class="nav-item active">
             <a class="nav-link" href="./resultados_personal.php">Ver Resultado(s) de Pregunta(s) personal(es)<span class="sr-only">(current)</span></a>
@@ -80,12 +87,22 @@
     <!--End Navbar-->
     <div class="container-fluid bg-1 " style="padding-top: 35px;padding-bottom: 70px;">
     <div class="row">
-      <div class="col-sm-6" >
+      <div class="col-sm-12" >
         <div class="card" style="background-color:#d0daea;border:0px;"> 
           <div class="card-body">
               <script type="text/javascript">
                 var nChart = 1;
               </script>
+              <?php
+                $instruccion ="SELECT * FROM asignatura where id_asignatura =\"$asignatura\";";
+                $res = mysqli_query($mysqli, $instruccion)
+                or die("Error al tomar las respuestas");
+                $asignatura = mysqli_fetch_assoc($res);
+                $nombre_asig = utf8_encode($asignatura['nombre']);
+                echo "<h1 class='text-center' style='color:black;margin-bottom:50px;'>$nombre_asig</h1>";
+              ?>
+              
+              <div class="row">
               <?php
                   $nChart = 1;
                   if (isset($filtrar))
@@ -94,22 +111,18 @@
                      {
                         //Filtrado por asignatura
                         //Tomar el nombre de la asignatura
-                        $instruccion ="SELECT * FROM asignatura where id_asignatura =\"$asignatura\";";
-                        $res = mysqli_query($mysqli, $instruccion)
-                        or die("Error al tomar las respuestas");
-                        $asignatura = mysqli_fetch_assoc($res);
-                        $nombre_asig = utf8_encode($asignatura['nombre']);
 
                         $query ="SELECT * FROM preguntasus;";
                         $preguntasus= mysqli_query($mysqli, $query)or die("Error al tomar las preguntasus");
 
-
+                        
                         foreach ($preguntasus as $key) {
                             $dates = "";
                             $values ="";
 
                             $id_asignatura = $asignatura['id_asignatura'];
                             $id_preg_us = utf8_encode($key['id_preg_us']);
+                            $enunciado = utf8_encode($key['enunciado']);
                             $op_respuesta = explode("&",utf8_encode($key["op_respuesta"])); 
 
                             $query = "SELECT count(id_asignatura) FROM respuestasus WHERE id_asignatura = ".$id_asignatura." and id_preg_us = 1";
@@ -125,7 +138,7 @@
                                   $porcentaje[$z] = 0;
                                 }
                                 else{
-                                  $porcentaje[$z] = $numResp[0]/$numRespTotal[0];
+                                  $porcentaje[$z] = ($numResp[0]/$numRespTotal[0])*100;
                                 }
 
                                 $dates = $dates."\"".$op_respuesta[$z]."\",";
@@ -138,8 +151,9 @@
                            
                           
                             $chartName = "Chart".$nChart;
-                            
+                            ?><div class = 'canvas-container'><?php
                             echo "<canvas id=".$chartName."></canvas>";
+                            echo "</div>";
                         
                         $nChart++;
                         ?>
@@ -153,15 +167,36 @@
                             
                             var myData = [<?php  echo $values;?>];
                             var colorPallete = [];
-                            var dynamicColors = function() {
-                              var r = Math.floor(Math.random() * 255);
-                              var g = Math.floor(Math.random() * 255);
-                              var b = Math.floor(Math.random() * 255);
-                              return "rgb(" + r + "," + g + "," + b + ")";
+                            var dynamicColors = function(i) {
+                              switch(i){
+                                case 1:
+                                  return "rgb(" + 226 + "," + 27 + "," + 27 + ")";
+                                case 2:
+                                  return "rgb(" + 0 + "," + 0 + "," + 255 + ")";
+                                case 3:
+                                  return "rgb(" + 45 + "," + 226 + "," + 45 + ")";
+                                case 4:
+                                  return "rgb(" + 247 + "," + 243 + "," + 17 + ")";
+                                  break;
+                                case 5:
+                                  return "rgb(" + 255 + "," + 128 + "," + 0 + ")";
+                                case 6:
+                                  return "rgb(" + 255 + "," + 0 + "," + 191 + ")";
+
+                                default:
+                                   var r = Math.floor(Math.random() * 255);
+                                    var g = Math.floor(Math.random() * 255);
+                                    var b = Math.floor(Math.random() * 255);
+                                    return "rgb(" + r + "," + g + "," + b + ")";
+
+                              }
+                             
                             };
+                            var cont = 1;
                             for (var i in myData) {
-                              colorPallete.push(dynamicColors());
-                           }
+                              colorPallete.push(dynamicColors(cont));
+                              cont++;
+                            }
                             var chart = new Chart(ctx, {
                                 // The type of chart we want to create
                                 type: 'doughnut',
@@ -180,6 +215,7 @@
                                 // Configuration options go here
                                 options:  {
                                 responsive: true,
+                                responsize : true,
                                 legend: {
                                     position: 'bottom',
                                 },
@@ -188,7 +224,7 @@
                                 },
                                 title: {
                                     display: true,
-                                    text: '<?php  echo $nombre_asig;?>'
+                                    text: '<?php  echo $enunciado;?>'
                                 }
                               }
                             });
@@ -197,6 +233,7 @@
                            
                         <?php 
                         }
+                        
 
 
                      }else{
@@ -206,53 +243,13 @@
                      
                   }
               ?>
-             <P>[ <A HREF='resultados.php' style="color:#4d668e;">Seleccionar otro filtro</A> ]</P>
+             
+           </div>
+           <br>
+           <P>[ <A HREF='resultados_personal.php' style="color:#4d668e;">Seleccionar otro filtro</A> ]</P>
           </div>
         </div>
       </div>
-      <div class="col-sm-6" >
-        <div class="card" style="background-color:#394a66;border:0px;"> 
-          <div class="card-body">
-             <?php
-             
-              $query="SELECT * from preguntasprof";
-              $query_res = mysqli_query($mysqli,$query);
-              if($res = mysqli_fetch_assoc($query_res)){
-                ?>
-                
-                <div class="table-responsive table-wrapper-scroll-y">               
-                <table class="table table-bordered table-striped">
-                <thead>
-                <tr>
-                  
-                  <th scope="col">Enunciado</th>
-                  <th scope="col">Posibles Respuestas</th>
-                </tr>
-                </thead>
-                <tbody>
-                <?php
-
-                print ("<TR>\n");
-                
-                print ("<TD>" .  utf8_encode($res['id_preg_prof']) . "</TD>\n");
-                print ("<TD>" .  utf8_encode($res['enunciado']) . "</TD>\n");
-                print ("</TR>\n");
-
-                while($res = mysqli_fetch_assoc($query_res)){
-                  print ("<TR>\n");
-                  print ("<TD>" .  utf8_encode($res['id_preg_prof']) . "</TD>\n");
-                  print ("<TD>" .  utf8_encode($res['enunciado']) . "</TD>\n");
-                  print ("</TR>\n");
-                }
-                print("</tbody>");
-                print("</table>");
-                print ("<BR>\n");
-              }
-              ?>
-             </div>
-        </div>
-      </div>
-    </div>
 
   </div>
 </div>

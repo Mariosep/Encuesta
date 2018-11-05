@@ -27,6 +27,7 @@
   ?>
 	<!--Navbar-->
 	<nav class="navbar navbar-dark bg-dark">
+     <img src="Logo_UCA.png" class="img-responsive img-rounded" style="display:inline;width: 40px;" alt="uca">
       <a class="navbar-brand" href="#">Insertar/Eliminar Asignatura(s)</a>
       <button class="navbar-toggler collapsed" type="button" data-toggle="collapse" data-target="#navbarsExample01" aria-controls="navbarsExample01" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
