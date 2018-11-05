@@ -80,6 +80,10 @@
       <div class="col-sm-6" >
         <div class="card" style="background-color:#d0daea;border:0px;"> 
           <div class="card-body">
+              <script type="text/javascript">
+                var nChart = 1;
+              </script>
+
               <?php
                   if (isset($filtrar))
                   {
@@ -90,10 +94,96 @@
                         $instruccion ="SELECT nombre FROM asignatura where id_asignatura =\"$asignatura\";";
                         $res = mysqli_query($mysqli, $instruccion)
                         or die("Error al tomar las respuestas");
-                        $nombre = mysqli_fetch_assoc($res);
-                        $nombre_asig = utf8_encode($nombre['nombre']);
+                        $asignatura = mysqli_fetch_assoc($res);
+                        $nombre_asig = utf8_encode($asignatura['nombre']);
 
-                        $instruccion ="SELECT id_preg_prof,respuesta FROM respuestasus where id_asignatura =\"$asignatura\";";
+                        $query ="SELECT * FROM preguntasus;";
+                        $preguntasprof= mysqli_query($mysqli, $query)or die("Error al tomar las preguntasprof");
+
+                        
+
+                        foreach ($preguntasprof as $key) {
+                            $dates = "";
+                            $values ="";
+
+                            $id_preg_prof = utf8_encode($key['id_preg_prof']);
+                            $enunciado = utf8_encode($key['enunciado']);
+                            $op_respuesta = explode("&",utf8_encode($key["op_respuesta"])); 
+
+                            $query = "SELECT count(*) FROM respuestasus WHERE id_asignatura = ".utf8_encode($asignatura['id_asignatura']);
+                            $numRespTotal =  mysqli_query($mysqli, $query)or die("Error al contar total de veces");
+                            $numRespTotal = utf8_encode(mysqli_fetch_row($numRespTotal));
+
+                            for ($z = 0; $z < count($op_respuesta); $z++) {
+                                $query = "SELECT count(*) FROM respuestasus WHERE id_asignatura = ".utf8_encode($asignatura['id_asignatura']).", id_preg_us = ".$id_preg_prof.", respuesta = ".$z;
+                                $numResp = mysqli_query($mysqli, $query)or die("Error al contar veces");
+                                $numResp = utf8_encode(mysqli_fetch_row($num));
+
+                                $porcentaje[$z] = $numResp/$numRespTotal;
+
+                                $dates = $dates."\"".$op_respuesta[$z]."\",";
+                                $values = $values.$porcentaje[$z].",";
+                            }
+
+                            $dates = trim($dates,",");
+                            $values = trim($values,",");
+
+                          ?>
+
+                        <canvas id="myChart"></canvas>
+                        <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
+                        <script type="text/javascript">
+                          var chartName = "Chart " + nChart;
+                          var ctx = document.getElementById(chartName).getContext('2d');
+                          nChart++;
+                          var myData = [<?php  echo $values;?>];
+                          var colorPallete = [];
+                          var dynamicColors = function() {
+                            var r = Math.floor(Math.random() * 255);
+                            var g = Math.floor(Math.random() * 255);
+                            var b = Math.floor(Math.random() * 255);
+                            return "rgb(" + r + "," + g + "," + b + ")";
+                          };
+                          for (var i in myData) {
+                            colorPallete.push(dynamicColors());
+                         }
+                          var chart = new Chart(ctx, {
+                              // The type of chart we want to create
+                              type: 'doughnut',
+
+                              // The data for our dataset
+                              data: {
+                                  labels: [<?php  echo $dates;?>],
+                                  datasets: [{
+                                      
+                                      borderColor: 'rgb(100, 113, 135)',
+                                      data: myData,
+                                      backgroundColor: colorPallete
+                                  }]
+                              },
+
+                              // Configuration options go here
+                              options:  {
+                              responsive: true,
+                              legend: {
+                                  position: 'bottom',
+                              },
+                              hover: {
+                                  mode: 'label'
+                              },
+                              title: {
+                                  display: true,
+                                  text: '<?php  echo $nombre_asig;?>'
+                              }
+                            }
+                          });
+                        </script>
+                           
+
+
+                        }
+
+                       /*$instruccion ="SELECT id_preg_prof,respuesta FROM respuestasus where id_asignatura =\"$asignatura\";";
                         $res = mysqli_query($mysqli, $instruccion)
                         or die("Error al tomar las respuestas");
 
@@ -126,44 +216,10 @@
                           $values = $values.$v_counter[$temp].",";
                           
                         }
-                        $dates = trim($dates,",");
-                        $values = trim($values,",");
-                        ?>
+                        */
+                        
 
-                        <canvas id="myChart"></canvas>
-                        <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
-                        <script type="text/javascript">
-                          var ctx = document.getElementById('myChart').getContext('2d');
-                          var chart = new Chart(ctx, {
-                              // The type of chart we want to create
-                              type: 'doughnut',
-
-                              // The data for our dataset
-                              data: {
-                                  labels: [<?php  echo $dates;?>],
-                                  datasets: [{
-                                      backgroundColor: 'rgb(57, 74, 102)',
-                                      borderColor: 'rgb(100, 113, 135)',
-                                      data: [<?php  echo $values;?>],
-                                  }]
-                              },
-
-                              // Configuration options go here
-                              options:  {
-                              responsive: true,
-                              legend: {
-                                  position: 'bottom',
-                              },
-                              hover: {
-                                  mode: 'label'
-                              },
-                              title: {
-                                  display: true,
-                                  text: '<?php  echo $nombre_asig;?>'
-                              }
-                            }
-                          });
-                        </script>
+                        
 
                         <?php                  
                      }else{
