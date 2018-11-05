@@ -2,8 +2,14 @@
 h5 {
   font-weight: bold; }
 
+#logo {
+  margin-right: 120px; }
+
+#title-encuesta {
+  text-align: center; }
+
 #login {
-  margin-left: 300px; }
+  margin-left: 50px; }
 
 header {
   padding: 50px; }
@@ -12,26 +18,26 @@ section {
   padding: 50px; }
   section h6 {
     font-weight: bold; }
+  section #asignatura-descripcion {
+    margin-right: 90px; }
   section #title-asignatura {
     margin-bottom: 20px; }
   section #title-pregUs {
-    margin-left: 200px;
     margin-bottom: 20px;
     text-align: center; }
-  section .preguntas-us {
-    display: right;
-    margin-left: 200px;
+  section #preguntas-us {
+    margin-bottom: 80px; }
+  section .tabla-preguntas-us {
     padding: 20px;
     border: 2px orange solid;
-    border-radius: 15px;
-    margin-bottom: 80px; }
+    border-radius: 15px; }
   section .enunciado-us {
     width: 550px;
     height: 20px; }
   section .respuesta-us {
-    font-size: 0.95em;
+    font-size: 0.90em;
     width: 400px; }
-  section #descripción {
+  section #descripci├│n {
     margin-top: 80px; }
   section #title-profesores {
     margin-bottom: 20px; }
@@ -63,7 +69,7 @@ section {
       font-size: 1em; }
     section .valoraciones-prof th:nth-child(n+2) {
       padding-left: 3px;
-      font-size: 0.8em;
+      font-size: 0.6em;
       padding-bottom: 2px; }
       section .valoraciones-prof th:nth-child(n+2) input {
         vertical-align: bottom;

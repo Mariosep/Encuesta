@@ -29,15 +29,15 @@ or die ("Error al acceder a la base de datos");
 			<img src="UcaLogo.png">
 		</div>
 
-		<div class="col-5">
+		<div class="col-5" id="title-encuesta">
 			<h5>ENCUESTA DE OPINIÓN DE LOS/AS ESTUDIANTES<br>
 			SOBRE LA LABOR DOCENTE DEL PROFESORADO</h5>
 		</div>
 
-		<div class="col-4">
-			<h4 id="login"> 
+		<div class="col-2">
+			<h5 id="login"> 
 				<a href="Login/index.html">Iniciar sesión</a> 
-			</h4>
+			</h5>
 		</div>
 	</div>
 </header>
@@ -90,7 +90,7 @@ mysqli_query($mysqli,  utf8_decode($query))or die("Fallo al insertar la encuesta
 
 <form name="encuesta"  action = "guardaRespuestas.php" method="POST">
 	<div class="row">
-		<div class="col-3">
+		<div class="col-3" id="asignatura-descripcion">
 			<h6 id="title-asignatura">ASIGNATURA</h6>
 			<select name="select-asignatura" id="select-asignatura">
 				<?php
@@ -106,9 +106,9 @@ mysqli_query($mysqli,  utf8_decode($query))or die("Fallo al insertar la encuesta
 			<p id= "descripción">A continuación se presentan una serie de cuestiones relativas a la docencia en esta asignatura. Tu colaboración es necesaria y consiste en señalar en la escala de respuesta tu grado de acuerdo con cada una de las afirmaciones, teniendo en cuenta que <b>"1"</b> significa <b>"totalmente en desacuerdo"</b> y <b>"5" "totalmente de acuerdo"</b>. Si el enunciado no procede o no tienes suficiente información, marca la opcion NS. <b>En nombre de la Universidad de Cádiz, GRACIAS POR TU PARTICIPACIÓN</b>.</p>
 
 		</div>
-		<div class="col-8">
+		<div class="col-8 preguntas-us">
 			<h6 id="title-pregUs">INFORMACIÓN PERSONAL Y ACADÉMICA DE LOS ESTUDIANTES</h6>
-			<div class="preguntas-us">
+			<div class="tabla-preguntas-us">
 				<table>
 					<?php
 					foreach ($preguntasus as $key) {
