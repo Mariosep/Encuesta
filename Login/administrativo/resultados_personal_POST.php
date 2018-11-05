@@ -93,11 +93,11 @@
                         $nombre = mysqli_fetch_assoc($res);
                         $nombre_asig = utf8_encode($nombre['nombre']);
 
-                        $instruccion ="SELECT id_preg_prof,respuesta FROM respuestasus where id_asignatura =\"$asignatura\";";
+                        $instruccion ="SELECT id_preg_prof,respuesta FROM respuestasprof where id_asignatura =\"$asignatura\";";
                         $res = mysqli_query($mysqli, $instruccion)
                         or die("Error al tomar las respuestas");
 
-                        $query ="SELECT * FROM preguntasus;";
+                        $query ="SELECT * FROM preguntasprof;";
                         $select = mysqli_query($mysqli, $query)
                         or die("Error al tomar el numero de rows de preguntasprof");
                         
@@ -130,10 +130,22 @@
                         $values = trim($values,",");
                         ?>
 
-                        <canvas id="myChart"></canvas>
+                        <canvas id="myChart" width="400" height="400"></canvas>
                         <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
+                    
                         <script type="text/javascript">
-                          var ctx = document.getElementById('myChart').getContext('2d');
+                          var ctx = document.getElementById('myChart');
+                          var myData = [<?php  echo $values;?>];
+                          var colorPallete = [];
+                          var dynamicColors = function() {
+                            var r = Math.floor(Math.random() * 255);
+                            var g = Math.floor(Math.random() * 255);
+                            var b = Math.floor(Math.random() * 255);
+                            return "rgb(" + r + "," + g + "," + b + ")";
+                          };
+                          for (var i in myData) {
+                            colorPallete.push(dynamicColors());
+                         }
                           var chart = new Chart(ctx, {
                               // The type of chart we want to create
                               type: 'doughnut',
@@ -142,9 +154,10 @@
                               data: {
                                   labels: [<?php  echo $dates;?>],
                                   datasets: [{
-                                      backgroundColor: 'rgb(57, 74, 102)',
+                                      
                                       borderColor: 'rgb(100, 113, 135)',
-                                      data: [<?php  echo $values;?>],
+                                      data: myData,
+                                      backgroundColor: colorPallete
                                   }]
                               },
 
@@ -173,7 +186,7 @@
                      
                   }
               ?>
-             <P>[ <A HREF='resultados.php' style="color:#4d668e;">Seleccionar otro filtro</A> ]</P>
+             <P>[ <A HREF='resultados_personal.php' style="color:#4d668e;">Seleccionar otro filtro</A> ]</P>
           </div>
         </div>
       </div>
