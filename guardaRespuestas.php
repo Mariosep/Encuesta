@@ -41,21 +41,21 @@ if ($coincide){
 	$query = "SELECT id_preg_us FROM preguntasus";
 	$id_preg_us = mysqli_query($mysqli,  utf8_decode($query))or die("Fallo al seleccionar total de pregUs");
 	
-
+	$asignatura = $_POST['select-asignatura'];
 	foreach ($id_preg_us as $key) {
 		$resp = $_POST[$key['id_preg_us']."-us"];
 		/*echo "<br>";
 		echo $id_encuesta[0]." ";
 		echo $i." ";
 		echo $resp." ";*/
-		$query = "INSERT INTO respuestasus (id_encuesta, id_preg_us, respuesta) VALUES (".$id_encuesta[0].", ".$key['id_preg_us'].", ".$resp.")";
+		$query = "INSERT INTO respuestasus (id_encuesta, id_asignatura, id_preg_us, respuesta) VALUES (".$id_encuesta[0].", ".$asignatura.", ".$key['id_preg_us'].", ".$resp.")";
 		mysqli_query($mysqli,  utf8_decode($query))or die("Fallo al insertar respuestasus");
 	}
 
 		$query = "SELECT id_preg_prof FROM preguntasprof";
 		$id_preg_prof= mysqli_query($mysqli,  utf8_decode($query))or die("Fallo al seleccionar total de pregProf");
 
-		$asignatura = $_POST['select-asignatura'];
+		
 		for($nprof=1; $nprof<=3; $nprof++){
 			if ($_POST['prof-'.$nprof] != 0){
 				foreach ($id_preg_prof as $key) {

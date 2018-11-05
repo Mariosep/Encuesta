@@ -103,7 +103,7 @@ mysqli_query($mysqli,  utf8_decode($query))or die("Fallo al insertar la encuesta
 				?>
 			</select>
 
-			<p id= "descripción">A continuación se presentan una serie de cuestiones relativas a la docencia en esta asignatura. Tu colaboración es necesaria y consiste en señalar en la escala de respuesta tu grado de acuerdo con cada una de las afirmaciones, teniendo en cuenta que <b>"1"</b> significa <b>"totalmente en desacuerdo"</b> y <b>"5" "totalmente de acuerdo"</b>. Si el enunciado no procede o no tienes suficiente información, marca la opcion NS. <b>En nombre de la Universidad de Cádiz, GRACIAS POR TU PARTICIPACIÓN</b>.</p>
+			<p id= "descripcion">A continuación se presentan una serie de cuestiones relativas a la docencia en esta asignatura. Tu colaboración es necesaria y consiste en señalar en la escala de respuesta tu grado de acuerdo con cada una de las afirmaciones, teniendo en cuenta que <b>"1"</b> significa <b>"totalmente en desacuerdo"</b> y <b>"5" "totalmente de acuerdo"</b>. Si el enunciado no procede o no tienes suficiente información, marca la opcion NS. <b>En nombre de la Universidad de Cádiz, GRACIAS POR TU PARTICIPACIÓN</b>.</p>
 
 		</div>
 		<div class="col-8 preguntas-us">

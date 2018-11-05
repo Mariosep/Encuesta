@@ -34,6 +34,10 @@ section{
 		margin-bottom: 20px;
 	}
 
+	#select-asignatura{
+		margin-bottom: 80px;
+	}
+
 	#title-pregUs{
 		//margin-left: 200px;
 		margin-bottom: 20px;
@@ -45,8 +49,6 @@ section{
 	}
 
 	.tabla-preguntas-us{
-		//display: right;
-		//margin-left: 200px;
 		padding: 20px; 
 		border: 2px orange solid;
 		border-radius: 15px;
@@ -56,6 +58,7 @@ section{
 	.enunciado-us{
 		width: 550px;
 		height: 20px;
+		padding-bottom: 10px;
 	}
 
 	.respuesta-us{
@@ -63,11 +66,9 @@ section{
 		width: 400px;
 	}
 
-	#descripción{
-		margin-top: 80px;
-	}
 
 	#title-profesores{
+		margin-top: 60px;
 		margin-bottom: 20px;
 
 	}
