@@ -85,6 +85,7 @@
               </script>
 
               <?php
+                  $nChart = 1;
                   if (isset($filtrar))
                   {
                      if($asignatura != "" )
@@ -100,7 +101,6 @@
                         $query ="SELECT * FROM preguntasus;";
                         $preguntasus= mysqli_query($mysqli, $query)or die("Error al tomar las preguntasus");
 
-                        
 
                         foreach ($preguntasus as $key) {
                             $dates = "";
@@ -133,9 +133,11 @@
                             $dates = trim($dates,",");
                             $values = trim($values,",");
 
-                          ?>
+                          
 
-                        <canvas id="myChart"></canvas>
+                        echo "<canvas id='Chart".$nChart."></canvas>";
+                        $nChart++;
+                        ?>
                         <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
                         <script type="text/javascript">
                           var chartName = "Chart " + nChart;
