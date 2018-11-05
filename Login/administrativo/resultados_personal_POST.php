@@ -91,35 +91,40 @@
                      {
                         //Filtrado por asignatura
                         //Tomar el nombre de la asignatura
-                        $instruccion ="SELECT nombre FROM asignatura where id_asignatura =\"$asignatura\";";
+                        $instruccion ="SELECT * FROM asignatura where id_asignatura =\"$asignatura\";";
                         $res = mysqli_query($mysqli, $instruccion)
                         or die("Error al tomar las respuestas");
                         $asignatura = mysqli_fetch_assoc($res);
                         $nombre_asig = utf8_encode($asignatura['nombre']);
 
                         $query ="SELECT * FROM preguntasus;";
-                        $preguntasprof= mysqli_query($mysqli, $query)or die("Error al tomar las preguntasprof");
+                        $preguntasus= mysqli_query($mysqli, $query)or die("Error al tomar las preguntasus");
 
                         
 
-                        foreach ($preguntasprof as $key) {
+                        foreach ($preguntasus as $key) {
                             $dates = "";
                             $values ="";
 
-                            $id_preg_prof = utf8_encode($key['id_preg_prof']);
-                            $enunciado = utf8_encode($key['enunciado']);
+                            $id_asignatura = $asignatura['id_asignatura'];
+                            $id_preg_us = utf8_encode($key['id_preg_us']);
                             $op_respuesta = explode("&",utf8_encode($key["op_respuesta"])); 
 
-                            $query = "SELECT count(*) FROM respuestasus WHERE id_asignatura = ".utf8_encode($asignatura['id_asignatura']);
+                            $query = "SELECT count(*) FROM respuestasus WHERE id_asignatura = ".$id_asignatura;
                             $numRespTotal =  mysqli_query($mysqli, $query)or die("Error al contar total de veces");
-                            $numRespTotal = utf8_encode(mysqli_fetch_row($numRespTotal));
+                            $numRespTotal = mysqli_fetch_row($numRespTotal);
 
                             for ($z = 0; $z < count($op_respuesta); $z++) {
-                                $query = "SELECT count(*) FROM respuestasus WHERE id_asignatura = ".utf8_encode($asignatura['id_asignatura']).", id_preg_us = ".$id_preg_prof.", respuesta = ".$z;
+                                $query = "SELECT count(*) FROM respuestasus WHERE id_asignatura = ".$id_asignatura." and id_preg_us = ".$id_preg_us." and respuesta = ".$z;
                                 $numResp = mysqli_query($mysqli, $query)or die("Error al contar veces");
-                                $numResp = utf8_encode(mysqli_fetch_row($num));
+                                $numResp = mysqli_fetch_row($numResp);
 
-                                $porcentaje[$z] = $numResp/$numRespTotal;
+                                if(isset($numRespTotal)){
+                                  $porcentaje = 0;
+                                }
+                                else{
+                                  $porcentaje[$z] = $numResp[0]/$numRespTotal[0];
+                                }
 
                                 $dates = $dates."\"".$op_respuesta[$z]."\",";
                                 $values = $values.$porcentaje[$z].",";
@@ -179,49 +184,11 @@
                           });
                         </script>
                            
-
+                        <?php 
 
                         }
 
-                       /*$instruccion ="SELECT id_preg_prof,respuesta FROM respuestasus where id_asignatura =\"$asignatura\";";
-                        $res = mysqli_query($mysqli, $instruccion)
-                        or die("Error al tomar las respuestas");
 
-                        $query ="SELECT * FROM preguntasus;";
-                        $select = mysqli_query($mysqli, $query)
-                        or die("Error al tomar el numero de rows de preguntasprof");
-                        
-
-                        $v_counter = array();
-                        $n_counter = array();
-                        while($resultado = mysqli_fetch_assoc($res)){
-                          //Ignoramos la respuestas NS/NC
-                          if($resultado['respuesta'] != 0){  
-                            $temp = $resultado['id_preg_prof'];
-                            $v_counter[$temp] += $resultado['respuesta'];
-                            $n_counter[$temp] += 1;
-                          }
-                        }
-                        $dates = "";
-                        $values ="";
-                        while($resultado = mysqli_fetch_assoc($select)){
-                          $temp =  $resultado['id_preg_prof'];
-                          if($n_counter[$temp]!=0){
-                            $v_counter[$temp] = $v_counter[$temp]/$n_counter[$temp];
-                          }else{
-                            $v_counter[$temp] = 0;
-                          }
-
-                          $dates = $dates."\"".$resultado['id_preg_prof']."\",";
-                          $values = $values.$v_counter[$temp].",";
-                          
-                        }
-                        */
-                        
-
-                        
-
-                        <?php                  
                      }else{
                         print ("No es posible realizar el filtrado, no se ha seleccionado ningun filtro.\n");
                      }
