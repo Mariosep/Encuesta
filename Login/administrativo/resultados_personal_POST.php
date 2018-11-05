@@ -26,7 +26,6 @@
   // Obtener valores introducidos en el formulario
     error_reporting(E_ALL & ~E_NOTICE);
     $filtrar = $_POST['filtrar'];
-    $profesor= $_POST['profesor'];
     $asignatura = $_POST['asignatura'];
     
 
@@ -84,282 +83,89 @@
               <?php
                   if (isset($filtrar))
                   {
-                     if($profesor != "" || $asignatura != "" )
+                     if($asignatura != "" )
                      {
-                        if($asignatura != ""){
+                        //Filtrado por asignatura
+                        //Tomar el nombre de la asignatura
+                        $instruccion ="SELECT nombre FROM asignatura where id_asignatura =\"$asignatura\";";
+                        $res = mysqli_query($mysqli, $instruccion)
+                        or die("Error al tomar las respuestas");
+                        $nombre = mysqli_fetch_assoc($res);
+                        $nombre_asig = utf8_encode($nombre['nombre']);
 
-                          if($profesor != ""){
+                        $instruccion ="SELECT id_preg_prof,respuesta FROM respuestasus where id_asignatura =\"$asignatura\";";
+                        $res = mysqli_query($mysqli, $instruccion)
+                        or die("Error al tomar las respuestas");
 
-                             //Filtrado por asignatura y profesor
-                            //Tomar el nombre de la asignatura
-                            $instruccion ="SELECT nombre FROM asignatura where id_asignatura =\"$asignatura\";";
-                            $res = mysqli_query($mysqli, $instruccion)
-                            or die("Error al tomar las respuestas");
-                            $nombre = mysqli_fetch_assoc($res);
-                            $nombre_asig = utf8_encode($nombre['nombre']);
-
-                            //Tomar nombre del profesor
-                            $instruccion ="SELECT nombre,apellidos FROM profesor where id_profesor =\"$profesor\";";
-                            $res = mysqli_query($mysqli, $instruccion)
-                            or die("Error al tomar las respuestas");
-                            $nombre = mysqli_fetch_assoc($res);
-                            $nombre_apell = utf8_encode($nombre['nombre'])." ".utf8_encode($nombre['apellidos']);
-
-                            $instruccion ="SELECT id_preg_prof,respuesta FROM respuestasprof where id_asignatura =\"$asignatura\" and id_profesor =\"$profesor\";";
-                            $res = mysqli_query($mysqli, $instruccion)
-                            or die("Error al tomar las respuestas");
-
-                            $query ="SELECT * FROM preguntasprof;";
-                            $select = mysqli_query($mysqli, $query)
-                            or die("Error al tomar el numero de rows de preguntasprof");
-                            
-
-                            $v_counter = array();
-                            $n_counter = array();
-                            while($resultado = mysqli_fetch_assoc($res)){
-                              //Ignoramos la respuestas NS/NC
-                              if($resultado['respuesta'] != 0){  
-                                $temp = $resultado['id_preg_prof'];
-                                $v_counter[$temp] += $resultado['respuesta'];
-                                $n_counter[$temp] += 1;
-                              }
-                            }
-                            $dates = "";
-                            $values ="";
-                            while($resultado = mysqli_fetch_assoc($select)){
-                              $temp =  $resultado['id_preg_prof'];
-                              if($n_counter[$temp]!=0){
-                                $v_counter[$temp] = $v_counter[$temp]/$n_counter[$temp];
-                              }else{
-                                $v_counter[$temp] = 0;
-                              }
-
-                              $dates = $dates."\"".$resultado['id_preg_prof']."\",";
-                              $values = $values.$v_counter[$temp].",";
-                              
-                            }
-                            $dates = trim($dates,",");
-                            $values = trim($values,",");
-                            ?>
-
-                            <canvas id="myChart"></canvas>
-                            <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
-                            <script type="text/javascript">
-                              var ctx = document.getElementById('myChart').getContext('2d');
-                              var chart = new Chart(ctx, {
-                                  // The type of chart we want to create
-                                  type: 'bar',
-
-                                  // The data for our dataset
-                                  data: {
-                                      labels: [<?php  echo $dates;?>],
-                                      datasets: [{
-                                          label: "Media (<?php  echo $nombre_asig;?>, <?php  echo $nombre_apell;?>)",
-                                          backgroundColor: 'rgb(57, 74, 102)',
-                                          borderColor: 'rgb(100, 113, 135)',
-                                          data: [<?php  echo $values;?>],
-                                      }]
-                                  },
-
-                                  // Configuration options go here
-                                  options:  {
-                                    responsive: true,
-                                    legend: {
-                                        position: 'top',
-                                    },
-                                    scales: {
-                                        yAxes: [{
-                                                display: true,
-                                                ticks: {
-                                                    beginAtZero: true,
-                                                    steps: 5,
-                                                    stepValue: 1,
-                                                    max: 5
-                                                }
-                                            }]
-                                    }
-                                }
-                              });
-                            </script>
-
-                            <?php
-
-                          }else{
-
-                            //Filtrado por asignatura
-                            //Tomar el nombre de la asignatura
-                            $instruccion ="SELECT nombre FROM asignatura where id_asignatura =\"$asignatura\";";
-                            $res = mysqli_query($mysqli, $instruccion)
-                            or die("Error al tomar las respuestas");
-                            $nombre = mysqli_fetch_assoc($res);
-                            $nombre_asig = utf8_encode($nombre['nombre']);
-
-                            $instruccion ="SELECT id_preg_prof,respuesta FROM respuestasprof where id_asignatura =\"$asignatura\";";
-                            $res = mysqli_query($mysqli, $instruccion)
-                            or die("Error al tomar las respuestas");
-
-                            $query ="SELECT * FROM preguntasprof;";
-                            $select = mysqli_query($mysqli, $query)
-                            or die("Error al tomar el numero de rows de preguntasprof");
-                            
-
-                            $v_counter = array();
-                            $n_counter = array();
-                            while($resultado = mysqli_fetch_assoc($res)){
-                              //Ignoramos la respuestas NS/NC
-                              if($resultado['respuesta'] != 0){  
-                                $temp = $resultado['id_preg_prof'];
-                                $v_counter[$temp] += $resultado['respuesta'];
-                                $n_counter[$temp] += 1;
-                              }
-                            }
-                            $dates = "";
-                            $values ="";
-                            while($resultado = mysqli_fetch_assoc($select)){
-                              $temp =  $resultado['id_preg_prof'];
-                              if($n_counter[$temp]!=0){
-                                $v_counter[$temp] = $v_counter[$temp]/$n_counter[$temp];
-                              }else{
-                                $v_counter[$temp] = 0;
-                              }
-
-                              $dates = $dates."\"".$resultado['id_preg_prof']."\",";
-                              $values = $values.$v_counter[$temp].",";
-                              
-                            }
-                            $dates = trim($dates,",");
-                            $values = trim($values,",");
-                            ?>
-
-                            <canvas id="myChart"></canvas>
-                            <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
-                            <script type="text/javascript">
-                              var ctx = document.getElementById('myChart').getContext('2d');
-                              var chart = new Chart(ctx, {
-                                  // The type of chart we want to create
-                                  type: 'doughnut',
-
-                                  // The data for our dataset
-                                  data: {
-                                      labels: [<?php  echo $dates;?>],
-                                      datasets: [{
-                                          label: "Media (<?php  echo $nombre_asig;?>)",
-                                          backgroundColor: 'rgb(57, 74, 102)',
-                                          borderColor: 'rgb(100, 113, 135)',
-                                          data: [<?php  echo $values;?>],
-                                      }]
-                                  },
-
-                                  // Configuration options go here
-                                  options:  {
-                                  responsive: true,
-                                  legend: {
-                                      position: 'bottom',
-                                  },
-                                  hover: {
-                                      mode: 'label'
-                                  },
-                                  title: {
-                                      display: true,
-                                      text: 'hola'
-                                  }
-                                }
-                              });
-                            </script>
-
-                            <?php
-
-                          }
-                          
-                        }else{
-
-                          //Filtrado por profesor
-                          $instruccion ="SELECT nombre,apellidos FROM profesor where id_profesor =\"$profesor\";";
-                          $res = mysqli_query($mysqli, $instruccion)
-                          or die("Error al tomar las respuestas");
-                          $nombre = mysqli_fetch_assoc($res);
-                          $nombre_apell = utf8_encode($nombre['nombre'])." ".utf8_encode($nombre['apellidos']);
-
-                          $instruccion ="SELECT id_preg_prof,respuesta FROM respuestasprof where id_profesor =\"$profesor\";";
-                          $res = mysqli_query($mysqli, $instruccion)
-                          or die("Error al tomar las respuestas");
-
-                          $query ="SELECT * FROM preguntasprof;";
-                          $select = mysqli_query($mysqli, $query)
-                          or die("Error al tomar el numero de rows de preguntasprof");
-                          
-
-                          $v_counter = array();
-                          $n_counter = array();
-                          while($resultado = mysqli_fetch_assoc($res)){
-                            //Ignoramos la respuestas NS/NC
-                            if($resultado['respuesta'] != 0){  
-                              $temp = $resultado['id_preg_prof'];
-                              $v_counter[$temp] += $resultado['respuesta'];
-                              $n_counter[$temp] += 1;
-                            }
-                          }
-                          $dates = "";
-                          $values ="";
-                          while($resultado = mysqli_fetch_assoc($select)){
-                            $temp =  $resultado['id_preg_prof'];
-                            if($n_counter[$temp]!=0){
-                              $v_counter[$temp] = $v_counter[$temp]/$n_counter[$temp];
-                            }else{
-                              $v_counter[$temp] = 0;
-                            }
-
-                            $dates = $dates."\"".$resultado['id_preg_prof']."\",";
-                            $values = $values.$v_counter[$temp].",";
-                            
-                          }
-                          $dates = trim($dates,",");
-                          $values = trim($values,",");
-                          ?>
-
-                          <canvas id="myChart"></canvas>
-                          <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
-                          <script type="text/javascript">
-                            var ctx = document.getElementById('myChart').getContext('2d');
-                            var chart = new Chart(ctx, {
-                                // The type of chart we want to create
-                                type: 'bar',
-
-                                // The data for our dataset
-                                data: {
-                                    labels: [<?php  echo $dates;?>],
-                                    datasets: [{
-                                        label: "Media (<?php  echo $nombre_apell;?>)",
-                                        backgroundColor: 'rgb(57, 74, 102)',
-                                        borderColor: 'rgb(100, 113, 135)',
-                                        data: [<?php  echo $values;?>],
-                                    }]
-                                },
-
-                                // Configuration options go here
-                                options:  {
-                                  responsive: true,
-                                  legend: {
-                                      position: 'top',
-                                  },
-                                  scales: {
-                                      yAxes: [{
-                                              display: true,
-                                              ticks: {
-                                                  beginAtZero: true,
-                                                  steps: 5,
-                                                  stepValue: 1,
-                                                  max: 5
-                                              }
-                                          }]
-                                  }
-                              }
-                            });
-                          </script>
-
-                          <?php
-                        }
+                        $query ="SELECT * FROM preguntasus;";
+                        $select = mysqli_query($mysqli, $query)
+                        or die("Error al tomar el numero de rows de preguntasprof");
                         
+
+                        $v_counter = array();
+                        $n_counter = array();
+                        while($resultado = mysqli_fetch_assoc($res)){
+                          //Ignoramos la respuestas NS/NC
+                          if($resultado['respuesta'] != 0){  
+                            $temp = $resultado['id_preg_prof'];
+                            $v_counter[$temp] += $resultado['respuesta'];
+                            $n_counter[$temp] += 1;
+                          }
+                        }
+                        $dates = "";
+                        $values ="";
+                        while($resultado = mysqli_fetch_assoc($select)){
+                          $temp =  $resultado['id_preg_prof'];
+                          if($n_counter[$temp]!=0){
+                            $v_counter[$temp] = $v_counter[$temp]/$n_counter[$temp];
+                          }else{
+                            $v_counter[$temp] = 0;
+                          }
+
+                          $dates = $dates."\"".$resultado['id_preg_prof']."\",";
+                          $values = $values.$v_counter[$temp].",";
+                          
+                        }
+                        $dates = trim($dates,",");
+                        $values = trim($values,",");
+                        ?>
+
+                        <canvas id="myChart"></canvas>
+                        <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
+                        <script type="text/javascript">
+                          var ctx = document.getElementById('myChart').getContext('2d');
+                          var chart = new Chart(ctx, {
+                              // The type of chart we want to create
+                              type: 'doughnut',
+
+                              // The data for our dataset
+                              data: {
+                                  labels: [<?php  echo $dates;?>],
+                                  datasets: [{
+                                      backgroundColor: 'rgb(57, 74, 102)',
+                                      borderColor: 'rgb(100, 113, 135)',
+                                      data: [<?php  echo $values;?>],
+                                  }]
+                              },
+
+                              // Configuration options go here
+                              options:  {
+                              responsive: true,
+                              legend: {
+                                  position: 'bottom',
+                              },
+                              hover: {
+                                  mode: 'label'
+                              },
+                              title: {
+                                  display: true,
+                                  text: '<?php  echo $nombre_asig;?>'
+                              }
+                            }
+                          });
+                        </script>
+
+                        <?php                  
                      }else{
                         print ("No es posible realizar el filtrado, no se ha seleccionado ningun filtro.\n");
                      }
