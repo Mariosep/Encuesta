@@ -41,7 +41,7 @@
   <!--Navbar-->
   <nav class="navbar navbar-dark bg-dark">
     <img src="Logo_UCA.png" class="img-responsive img-rounded" style="display:inline;width: 40px;" alt="uca">
-      <a class="navbar-brand" href="#">Ver Resultado(s) de Pregunta(s) profesorado</a>
+      <a class="navbar-brand" href="#">Ver Resultado(s) de Pregunta(s) personal(es)</a>
       <button class="navbar-toggler collapsed" type="button" data-toggle="collapse" data-target="#navbarsExample01" aria-controls="navbarsExample01" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
@@ -69,8 +69,8 @@
           <li class="nav-item active">
             <a class="nav-link" href="./resultados.php">Ver Resultado(s) de Pregunta(s) profesorado<span class="sr-only">(current)</span></a>
           </li>
-          <li class="nav-item">
-            <a class="nav-link" href="./resultados_personal.php">Ver Resultado(s) de Pregunta(s) personal(es)</a>
+          <li class="nav-item active">
+            <a class="nav-link" href="./resultados_personal.php">Ver Resultado(s) de Pregunta(s) personal(es)<span class="sr-only">(current)</span></a>
           </li>
         </ul>
       </div>
@@ -237,7 +237,7 @@
                               var ctx = document.getElementById('myChart').getContext('2d');
                               var chart = new Chart(ctx, {
                                   // The type of chart we want to create
-                                  type: 'bar',
+                                  type: 'doughnut',
 
                                   // The data for our dataset
                                   data: {
@@ -252,21 +252,17 @@
 
                                   // Configuration options go here
                                   options:  {
-                                    responsive: true,
-                                    legend: {
-                                        position: 'top',
-                                    },
-                                    scales: {
-                                        yAxes: [{
-                                                display: true,
-                                                ticks: {
-                                                    beginAtZero: true,
-                                                    steps: 5,
-                                                    stepValue: 1,
-                                                    max: 5
-                                                }
-                                            }]
-                                    }
+                                  responsive: true,
+                                  legend: {
+                                      position: 'bottom',
+                                  },
+                                  hover: {
+                                      mode: 'label'
+                                  },
+                                  title: {
+                                      display: true,
+                                      text: 'hola'
+                                  }
                                 }
                               });
                             </script>

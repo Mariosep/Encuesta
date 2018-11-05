@@ -57,6 +57,7 @@
 
 	$query="CREATE TABLE RespuestasUs(
 		id_encuesta int NOT NULL,
+		id_asignatura int NOT NULL,
 		id_preg_us int NOT NULL ,
 		respuesta int NOT NULL,
 		PRIMARY KEY(id_encuesta,id_preg_us),

@@ -33,7 +33,7 @@
   <!--Navbar-->
   <nav class="navbar navbar-dark bg-dark">
       <img src="Logo_UCA.png" class="img-responsive img-rounded" style="display:inline;width: 40px;" alt="uca">
-      <a class="navbar-brand" href="#">Ver Resultado(s) de Pregunta(s) profesorado</a>
+      <a class="navbar-brand" href="#">Ver Resultado(s) de Pregunta(s) personal(es)</a>
       <button class="navbar-toggler collapsed" type="button" data-toggle="collapse" data-target="#navbarsExample01" aria-controls="navbarsExample01" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
@@ -58,11 +58,11 @@
           <li class="nav-item">
             <a class="nav-link" href="./tipo_subtipo.php">Añadir/Eliminar Tipo(s)/Subtipo(s)</a>
           </li>
-          <li class="nav-item active">
-            <a class="nav-link" href="./resultados.php">Ver Resultado(s) de Pregunta(s) profesorado<span class="sr-only">(current)</span></a>
-          </li>
           <li class="nav-item">
-            <a class="nav-link" href="./resultados_personal.php">Ver Resultado(s) de Pregunta(s) personal(es)</a>
+            <a class="nav-link" href="./resultados.php">Ver Resultado(s) de Pregunta(s) profesorado</a>
+          </li>
+          <li class="nav-item active">
+            <a class="nav-link" href="./resultados_personal.php">Ver Resultado(s) de Pregunta(s) personal(es)<span class="sr-only">(current)</span></a>
           </li>
         </ul>
         </ul>
@@ -71,14 +71,14 @@
     <!--End Navbar-->
     <div class="container-fluid bg-1 ">
     <div class="row">
-      <div class="col-sm-1"></div>
-      <div class="col-sm-10" >
+      <div class="col-sm-4"></div>
+      <div class="col-sm-4" >
         
-        <form action="./resultados_POST.php" method=post>
+        <form action="./resultados_personal_POST.php" method=post>
           <div class="card" style="background-color:#394a66;border:0px;margin-bottom: 240px;"> 
               <div class="card-body" >
                    <div class="row">
-                    <div class="col-sm-6" >
+                    <div class="col-sm-12" >
                       <h2 class="card-title text-center">Filtrado por asignatura</h2>
                       <div class="form-group">
                           <select class="form-control" id="exampleFormControlSelect1" name="asignatura">
@@ -94,22 +94,7 @@
                           </select>
                       </div> 
                     </div>
-                    <div class="col-sm-6" >
-                      <h2 class="card-title text-center">Filtrado por profesor</h2>
-                      <div class="form-group">
-                          <select class="form-control" id="exampleFormControlSelect1" name="profesor">
-                             <?php
-
-                                  $query="SELECT * from profesor";
-                                  $query_res = mysqli_query($mysqli,$query);
-                                  print("<option value=".NULL.">"."Sin seleccionar"."</option>");
-                                  while($res =  mysqli_fetch_assoc($query_res)){
-                                    print("<option value=".$res['id_profesor'].">".utf8_encode($res['nombre'])." ".utf8_encode($res['apellidos'])."</option>");
-                                  }
-                             ?>
-                          </select>
-                      </div> 
-                    </div>
+                    
                 </div>
                 <div class="form-group">                         
                       <button type="submit" name="filtrar" class="btn btn-primary">Filtrar</button>
@@ -121,7 +106,7 @@
        
           
       </div>
-      <div class="col-sm-1"></div>
+      <div class="col-sm-4"></div>
     </div>
 
   </div>

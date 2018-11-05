@@ -42,19 +42,20 @@
             <a class="nav-link" href="./tipo_subtipo.php">Añadir/Eliminar Tipo(s)/Subtipo(s)</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="./resultados.php">Ver Resultados</a>
+            <a class="nav-link" href="./resultados.php">Ver Resultado(s) de Pregunta(s) profesorado</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="./resultados_personal.php">Ver Resultado(s) de Pregunta(s) personal(es)</a>
           </li>
         </ul>
       </div>
     </nav>
   	<!--End Navbar-->
-  	<div class="container-fluid bg-1 text-center">
+  	<div class="container-fluid bg-1 text-center" style="padding-bottom: 90px;">
 		<div class="row">
 			<div class="col-sm-12">
 				<img src="uca.jpg" class="img-responsive img-rounded" style="display:inline;width: 750px;" alt="uca">
-				<p class="linea-parrafo" >La industria de la tecnología es un medio en el que se producen cambios 
-				frecuentemente, por ello es necesario estar al día de la actualidad tecnológica. Por este motivo
-			 	hemos decidido llevar acabo este IV Congreso Internacional de Programación e Innovación.</p><br>
+				
 
 				  
 			</div>

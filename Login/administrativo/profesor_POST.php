@@ -54,7 +54,10 @@
             <a class="nav-link" href="./tipo_subtipo.php">Añadir/Eliminar Tipo(s)/Subtipo(s)</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="./resultados.php">Ver Resultados</a>
+            <a class="nav-link" href="./resultados.php">Ver Resultado(s) de Pregunta(s) profesorado</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="./resultados_personal.php">Ver Resultado(s) de Pregunta(s) personal(es)</a>
           </li>
         </ul>
       </div>
